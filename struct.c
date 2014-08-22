@@ -1,26 +1,35 @@
 #include <stdio.h>
-#define N 100
+#include <stdlib.h>
 struct list{
-  char name[50];//名前
-  int age;//年齢
+char name[50];//名前
+int age;//年齢
+  struct list *next;
 };
 int main(void){
-  struct list data[N];//N人まで
-  int i,t=0;
-  puts("年齢に-1を入れると入力終了");
-  /*入力*/
-  for(i=0;i<N;i++){
-    printf("名前：");scanf("%s",data[i].name);
-    printf("年齢：");scanf("%d",&data[i].age);
-    if(data[i].age==-1)
-      break;
-    t++;
+  int t=1;
+  struct list *data;//初期構造体
+  data = (struct list *)malloc(sizeof(struct list));//領域確保
+   struct list *tmp = data;//保存用
+ /*入力*/
+  puts("入力_______________________________________");
+  while(t){
+    printf("名前入力：");scanf("%s",tmp->name);
+    printf("年齢入力：");scanf("%d",&tmp->age);
+    printf("続行(y/n:1/0)：");scanf("%d",&t);
+      tmp->next = NULL;
+    if(t==1){
+      struct list *data2;//新しい領域
+      data2 = (struct list *)malloc(sizeof(struct list));
+      tmp->next = data2;
+      tmp = tmp->next;
+    }
   }
   /*出力*/
-  puts("list出力______________________");
-  for(i=0;i<t;i++){
-    printf("名前：%s\n",data[i].name);
-    printf("年齢：%d\n",data[i].age);
-  }
+  puts("データ___________________________________");
+   tmp = data;
+   while(tmp){
+     printf("%s、%d歳\n",tmp->name,tmp->age);
+     tmp = tmp->next;
+   }
   return 0;
 }
